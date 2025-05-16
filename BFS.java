@@ -1,4 +1,4 @@
-public class Graphs {
+public class BFS {
     static class Edge {
         int src;
         int dest;
@@ -6,14 +6,14 @@ public class Graphs {
         Edge(int src,int dest,int wt) {
             this.src=src;
             this.dest=dest;
-            thid.wt=wt;
+            this.wt=wt;
         }
     }
     public static void createGraph(ArrayList<Edge>graph[],int V) {
         for(int i=0;i<V;i++) {
             graph[i]= new ArrayList<>();
         }
-         graph[0].add(new Edge(0,1,2));
+        graph[0].add(new Edge(0,1,2));
         graph[0].add(new Edge(0,2,4));
         graph[1].add(new Edge(1,0,2));
         graph[1].add(new Edge(1,3,7));
@@ -22,16 +22,21 @@ public class Graphs {
         graph[3].add(new Edge(3,1,7));
         graph[3].add(new Edge(3,2,3));
     }
-   
-    }
-    public static void main(String[] args) {
-        int V=4;
-        ArrayList<Edge> graph[]=new ArrayList[V];
-        createGraph(graph,V);
-        for(int i=0;i<V;i++) {
-            for(int j=0;j<graph[i].size();j++) {
-                Edge e=graph[i].get(j);
-                System.out.println("src: "+e.src+" dest: "+e.dest+" wt: "+e.wt);
+    public static void bfs(ArrayList<Edge>graph,int src) {
+        Queue<Integer> q=new LinkedList<>();
+        boolean visited[]=new boolean[graph.length];
+        q.add(src);
+        while(!q.isEmpty()) {
+            int curr=q.remove();
+            if(!visited[curr]) {
+                System.out.print(curr+" ");
+                visited[curr]=true;
+                
+                for(int i=0;i<graph[curr].size();i++) {
+                    Edge e=graph[curr].get(i);
+                    q.add(e.dest);
+                }
             }
         }
     }
+}
